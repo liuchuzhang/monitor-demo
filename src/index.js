@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import './test.css';
 import Vue from 'vue';
 import App from './App.vue'
 
