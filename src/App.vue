@@ -13,6 +13,13 @@ export default {
       a: null,
     }
   },
+  mounted() {
+    window.onerror = function(message, filePath, line, column, error) {
+      axios.post('http://localhost:3000/sl', { filePath, line, column }).then(res => {
+        console.log(res);
+      })
+    };
+  },
   methods: {
     handleClickJs() {
       this.a.name

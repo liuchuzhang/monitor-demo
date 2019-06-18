@@ -9,11 +9,11 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 module.exports = {
   name: 'app',
   entry: {
-    listen: './src/listenError.js',
+    // listen: './src/listenError.js',
     index: './src/index.js'
   },
   // 将编译后的代码映射回原始源代码
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist'
   },

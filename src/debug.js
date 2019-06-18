@@ -77,8 +77,8 @@ export default function(Vue, option = {}) {
   }
 
   Vue.config.errorHandler = function(err, vm, info, m) {
-    console.log(m);
     if (vm) {
+      console.log(vm)
       let componentName = formatComponentName(vm);
       let propsData = vm.$options && vm.$options.propsData;
       debug.notifyError({

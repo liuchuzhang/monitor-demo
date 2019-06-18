@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build:dll & webpack-dev-server --open --source-map",
+    "start": "npm run build:dll & webpack-dev-server --open",
     "backend": "node scripts/app.js",
     "server": "node devServer.js",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js -p --progress --hide-modules",
