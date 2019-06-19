@@ -1,4 +1,4 @@
-// import sourceMap from 'source-map'
+import axios from 'axios';
 let debugConfig = {
     Vue: null,
     //项目名称
@@ -42,28 +42,34 @@ function _logReport({ type, severity, error, metaData, message, lineNumber, colu
     },
     pageLevel = 'p4';
 
-  //此处可以给你的页面进行分级
-  pageLevel = 'p0'; //getPageLevel();
-  const data = {
-    entryName,
-    scriptVersion,
-    message,
-    metaData,
-    name,
-    releaseStage,
-    severity,
-    stacktrace,
-    time,
-    title,
-    type,
-    url,
-    client,
-    lineNumber,
-    columnNumber,
-    fileName,
-    pageLevel //页面等级
-  };
-  console.log(data);
+  axios.post('http://localhost:3000/sl', { filePath: fileName, line: lineNumber, column: columnNumber }).then(res => {
+    console.log('123123');
+    const { line, column, source, name: key } = res.data;
+    //此处可以给你的页面进行分级
+    pageLevel = 'p0'; //getPageLevel();
+    const data = {
+      entryName,
+      scriptVersion,
+      message,
+      metaData,
+      name,
+      releaseStage,
+      severity,
+      stacktrace,
+      time,
+      title,
+      type,
+      url,
+      client,
+      line,
+      column,
+      fileName,
+      pageLevel, //页面等级
+      source,
+      key
+    };
+    console.log(data);
+  });
 }
 
 export default function(Vue, option = {}) {
@@ -76,9 +82,12 @@ export default function(Vue, option = {}) {
     return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '');
   }
 
-  Vue.config.errorHandler = function(err, vm, info, m) {
+  Vue.config.errorHandler = function(err, vm, info) {
+    console.log(err);
+    console.log(vm);
+    console.log(info);
+    console.log(typeof info)
     if (vm) {
-      console.log(vm)
       let componentName = formatComponentName(vm);
       let propsData = vm.$options && vm.$options.propsData;
       debug.notifyError({
@@ -101,7 +110,7 @@ export default function(Vue, option = {}) {
   };
 
   window.onerror = function(msg, url, lineNo, columnNo, error) {
-    console.log('errorrrrrrrrr');
+    console.log('onerror')
     debug.notifyError({
       type: 'uncaught',
       error,

@@ -14,11 +14,15 @@ export default {
     }
   },
   mounted() {
-    window.onerror = function(message, filePath, line, column, error) {
-      axios.post('http://localhost:3000/sl', { filePath, line, column }).then(res => {
-        console.log(res);
-      })
-    };
+    // debug();
+    // window.onerror = function(message, filePath, line, column, error) {
+    //   axios.post('http://localhost:3000/sl', { filePath, line, column }).then(res => {
+    //   })
+    // };
+    setTimeout(() => {
+      const str = '12312321'
+      sads
+    }, 5000);
   },
   methods: {
     handleClickJs() {

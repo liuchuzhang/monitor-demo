@@ -17,6 +17,7 @@ app.use(
   })
 );
 app.use(json());
+// 允许跨域
 app.use(cors());
 app.use(logger());
 app.use(require('koa-static')(__dirname + '/public'));

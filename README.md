@@ -1,8 +1,7 @@
-# webpack-dll
-
-## 准备
+## Usage
 
 ```shell
-  npm install source-map --save-dev
+  npm install
+  cd scripts
+  yarn & yarn start
 ```
-在 package.json 里配置 `--sourcemap`

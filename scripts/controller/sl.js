@@ -1,9 +1,7 @@
-const fs = require('fs');
-const request = require('request');
 const http = require('http');
-
 const sourceMap = require('source-map');
-const readFile = function(filePath) {
+
+const readFile = function(filePath, isJson) {
   return new Promise(function(resolve, reject) {
     http
       .get(filePath, res => {
@@ -13,11 +11,15 @@ const readFile = function(filePath) {
         let error;
         if (statusCode !== 200) {
           error = new Error('请求失败\n' + `状态码: ${statusCode}`);
-        } 
+        } else if (isJson && !/^application\/json/.test(contentType)) {
+          error = new Error('无效的 content-type.\n' +
+                            `期望的是 application/json 但接收到的是 ${contentType}`);
+        }
         if (error) {
           console.error(error.message);
           // 消费响应数据来释放内存。
           res.resume();
+          reject();
           return;
         }
 
@@ -28,10 +30,8 @@ const readFile = function(filePath) {
         });
         res.on('end', () => {
           try {
-            // console.log(rawData)
-            resolve(rawData)
+            resolve(isJson ? JSON.parse(rawData) : rawData)
           } catch (e) {
-            console.error(e.message);
             reject()
           }
         });
@@ -44,15 +44,14 @@ const readFile = function(filePath) {
 };
 
 async function searchSource(filePath, line, column) {
-  console.log('----------------------------------');
+  console.log('---------------searchSource-------------------');
   console.log(filePath, line, column);
-  // const rawSourceMap = await readFile(filePath);
-  // console.log(rawSourceMap)
-  const consumer = await new sourceMap.SourceMapConsumer({ sourceRoot: filePath });
-  console.log(consumer)
+  // 读取 .map 文件
+  const rawSourceMap = await readFile(`${filePath}.map`, 1);
+  const consumer = await new sourceMap.SourceMapConsumer(rawSourceMap);
   const res = consumer.originalPositionFor({
     line: line,
-    column: column
+    column: column,
   });
   consumer.destroy();
   console.log(res);

@@ -13,7 +13,7 @@ module.exports = {
     index: './src/index.js'
   },
   // 将编译后的代码映射回原始源代码
-  // devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: './dist'
   },
