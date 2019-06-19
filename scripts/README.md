@@ -1,6 +1,6 @@
-# scripts
+# Scripts
 
-## open service
+## Open Service
 
 ```shell
   yarn & yarn start

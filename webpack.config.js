@@ -43,9 +43,6 @@ module.exports = {
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, 'dist', '*_dll.js')
     }),
-    new AddAssetHtmlPlugin({
-      filepath: path.resolve(__dirname, 'dist', 'listen.js')
-    }),
     // 清理 /dist 文件夹
     // new CleanWebpackPlugin(),
     // vue loader

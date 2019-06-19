@@ -19,10 +19,10 @@ export default {
     //   axios.post('http://localhost:3000/sl', { filePath, line, column }).then(res => {
     //   })
     // };
-    setTimeout(() => {
-      const str = '12312321'
-      sads
-    }, 5000);
+    // setTimeout(() => {
+    //   const str = '12312321'
+    //   sads
+    // }, 5000);
   },
   methods: {
     handleClickJs() {

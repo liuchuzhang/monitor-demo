@@ -4,9 +4,13 @@ const searchSource = require('./../controller/sl');
 router.prefix('/sl');
 
 router.post('/', async (ctx, next) => {
-  const { filePath, line, column } = ctx.request.body;
+  const { filePath, line, column, type, stacktrace, ...options } = ctx.request.body;
   console.log(filePath);
-  ctx.body = await searchSource(filePath, line, column);
+  const source = await searchSource({ filePath, line, column, type, stacktrace })
+  ctx.body = {
+    ...source,
+    ...options
+  };
 });
 
 module.exports = router;
