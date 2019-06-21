@@ -29,7 +29,7 @@ export default {
       this.a.name
     },
     handleClickReq() {
-      axios.get('https://www.qweqweqwe.com')
+      axios.post('https://www.qweqweqwe.com', { a:1 })
     }
   }
 }

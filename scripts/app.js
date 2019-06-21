@@ -34,3 +34,5 @@ const server = app.listen(3000, () => {
   const address = server.address()
   console.log(`server run as ${address.address}:${address.port}`)
 })
+
+export default server;

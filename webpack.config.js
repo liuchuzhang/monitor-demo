@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const packagejson = require('./package.json');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   name: 'app',
@@ -14,6 +15,8 @@ module.exports = {
   },
   // 将编译后的代码映射回原始源代码
   devtool: 'source-map',
+  // 生成打包后 js 文件对应的 map 文件
+  // productionSourceMap: true,
   devServer: {
     contentBase: './dist'
   },
@@ -47,7 +50,13 @@ module.exports = {
     // new CleanWebpackPlugin(),
     // vue loader
     new VueLoaderPlugin(),
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new UglifyJSPlugin({
+      sourceMap: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
   ],
   output: {
     path: path.join(__dirname, 'dist'),

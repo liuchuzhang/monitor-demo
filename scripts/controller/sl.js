@@ -76,7 +76,7 @@ const searchSource = async ({ filePath, line, column, type, stacktrace }) => {
   }
 
   // 读取 .map 文件
-  const rawSourceMap = await readFile(`http://127.0.0.1:5500/dist/index.js.map`, 1);
+  const rawSourceMap = await readFile(filePath, 1);
   const consumer = await new sourceMap.SourceMapConsumer(rawSourceMap);
   const res = consumer.originalPositionFor({
     line: Number(line),
